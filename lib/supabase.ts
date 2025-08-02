@@ -1,6 +1,21 @@
-import { createClient } from '@supabase/supabase-js'
+import { createBrowserClient } from '@supabase/auth-helpers-nextjs'
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createServerActionClient } from '@supabase/auth-helpers-nextjs'
+import { type CookieOptions } from '@supabase/auth-helpers-shared'
+import { type Database } from '@/types/supabase'
 
-const supabaseUrl = 'https://wcutflibtwdeducrdzur.supabase.co'
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+export const supabase = createBrowserClient<Database>(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+)
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+export const createClientComponentClient = () => createBrowserClient<Database>(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+)
+
+export const createServerClient = (cookies: () => CookieOptions) =>
+  createServerComponentClient<Database>({ cookies })
+
+export const createActionClient = (cookies: () => CookieOptions) =>
+  createServerActionClient<Database>({ cookies })
