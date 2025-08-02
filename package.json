@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "postinstall": "npm install @supabase/supabase-js"
+  },
   "dependencies": {
     "@supabase/supabase-js": "^2.53.0",
     "next": "^15.4.5",
